@@ -1,0 +1,83 @@
+h1, h2, h3, ul {
+	font-family: arial;
+}
+
+h1 {
+	font-size: 20px;
+	text-align: center;
+}
+
+h2 {
+	font-size: 15px;
+}
+
+h3 {
+	font-size: 10px;
+}
+
+li {
+	font-size: 10px;
+}
+
+.leftDiv {
+	background-color: #48D1CC;
+	float: left;
+	display: inline;
+	width: 300px;
+	height: 700px;
+}
+
+.rightDiv {
+	background-color: #48D1CC;
+	float:left;
+	display: inline;
+	width: 650px;
+	height: 700px;
+}
+
+.content {
+	margin: 25px;
+}
+
+body {
+	background-color: #E0FFFF;
+}
+
+.block1, .block2, .block3 {
+	background-color: white;
+	margin: 5px;
+}
+
+.infoTitle {
+	font-size: 12px;
+}
+
+.icon {
+	float: left;
+	display: inline;
+	width: 30px;
+}
+
+.info {
+	float: left;
+	display: inline;
+	width: auto;
+}
+
+#profilePic {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#picInfo {
+	text-align: center;
+	font-size: 15px;
+	background-color: #008080;
+	margin-top: 0px;
+}
+
+.imgText {
+	font-size: 15px;
+	font: black;
+}

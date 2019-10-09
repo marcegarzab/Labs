@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TODO</title>
+  <meta charset="UTF-8"/> 
+  <link rel="stylesheet" type="text/css" href="./css/styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>TO DO</h1>
+    <div class="list">
+      <ul id="todoList">
+        <li>
+          <input type="checkbox" name="todo" value="1" onchange="crossoutFunction(this);">
+            <span id="s1">Hacer laboratorio de web</span>
+        </li>
+        <li>
+          <input type="checkbox" name="todo" value="2" onchange="crossoutFunction(this);">
+          <span id="s2">ejercicio</span>
+        </li>
+        <li>
+          <input type="checkbox" name="todo" value="3" onchange="crossoutFunction(this);">
+          <span id="s3">ir al super</span>
+        </li>
+        <li>
+          <input type="checkbox" name="todo" value="4" onchange="crossoutFunction(this);">
+          <span id="s4">preparar de cenar</span>
+        </li>
+        <li>
+          <input type="checkbox" name="todo" value="5" onchange="crossoutFunction(this);">
+          <span id="s5">tomar 2 litros de agua</span>
+        </li>
+      </ul>
+      <input id="newItem" type="text" name="newitem">
+    </div>
+  </div>
+  <script type="text/javascript" src="./js/js.js"></script>
+</body>
+</html>

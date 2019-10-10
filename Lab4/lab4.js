@@ -54,7 +54,7 @@ const climateFunc = function(cityName, longAndLat){ //darksky api for weather fo
 	const lat = parseFloat(splitLongLat[1])
 	const long = parseFloat(splitLongLat[0])
 
-	const url = 'https://api.darksky.net/forecast/' + credentials.DARK_SKY_SECRET_KEY + '/' + lat + "," + long //+ "/lang=es/units=si"
+	const url = 'https://api.darksky.net/forecast/' + credentials.DARK_SKY_SECRET_KEY + '/' + lat + "," + long + "?lang=es&units=si"
 	console.log(url)
 	request({url, json:true}, function(error, response){
 		if(error){
@@ -67,9 +67,9 @@ const climateFunc = function(cityName, longAndLat){ //darksky api for weather fo
 				const climate = {
 					description : data.hourly.summary,
 					temp : data.currently.temperature,
-					humidity : data.currently.precipProbability
+					precip : data.currently.precipProbability
 				}
-				console.log(cityName + ": " + climate.description + "Actualmente esta a " + climate.temp + "°C. Hay " + (climate.humidity*100) + "% de posibilidad de lluvia.")
+				console.log(cityName + ": " + climate.description + " Actualmente esta a " + climate.temp + "°C. Hay " + (climate.precip*100) + "% de posibilidad de lluvia.")
 			}
 		}
 	})

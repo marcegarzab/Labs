@@ -1,3 +1,4 @@
 const cityClimate = require('./lab4.js')
-cityClimate.longAndLatFunc('New York')
+cityClimate.longAndLatFunc('Mexico')
+
 

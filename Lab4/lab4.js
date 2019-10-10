@@ -28,8 +28,33 @@ ej. "Despejado durante el día. Actualmente esta a 4°C. Hay 80% de posibilidad 
 const credentials = require('./credentials.js')
 const request = require('request')
 
-const latAndLongFunc = function(cityName){ //mapbox api for lat and long
+const longAndLatFunc = function(cityName){ //mapbox api for lat and long
 	const url = 'https://api.mapbox.com/geocoding/v5/mapbox.places/' + cityName + '.json?access_token=' + credentials.MAPBOX_TOKEN
+	request({url, json:true}, function(error, response){
+		if(error){
+			console.log(error.Error)
+		}else{
+			const data = response.body
+			if(data.Response == 'False'){
+				console.log('Error: ' + data.Error)
+			}else{
+				const longAndLat = data.features[0].center
+				climateFunc(cityName, longAndLat)
+			}
+		}
+	})
+}
+
+
+
+
+const climateFunc = function(cityName, longAndLat){ //darksky api for weather forecast
+	const LongLatString = longAndLat.toString()
+	const splitLongLat = LongLatString.split(",")
+	const lat = parseFloat(splitLongLat[1])
+	const long = parseFloat(splitLongLat[0])
+
+	const url = 'https://api.darksky.net/forecast/' + credentials.DARK_SKY_SECRET_KEY + '/' + lat + "," + long //+ "/lang=es/units=si"
 	console.log(url)
 	request({url, json:true}, function(error, response){
 		if(error){
@@ -39,35 +64,18 @@ const latAndLongFunc = function(cityName){ //mapbox api for lat and long
 			if(data.Response == 'False'){
 				console.log('Error: ' + data.Error)
 			}else{
-				// const latAndLong = {
-				// 	latitude: ,
-				// 	longitude:
-				// }
-				// console.log(latAndLong)
-				console.log(response.body)
-				//climateFunc()
+				const climate = {
+					description : data.hourly.summary,
+					temp : data.currently.temperature,
+					humidity : data.currently.precipProbability
+				}
+				console.log(cityName + ": " + climate.description + "Actualmente esta a " + climate.temp + "°C. Hay " + (climate.humidity*100) + "% de posibilidad de lluvia.")
 			}
 		}
 	})
 }
 
-
-// const climateFunc = function(){ //darksky api for weather forecast
-// 	const url = 'https://api.darksky.net/forecast/' + credentials.DARK_SKY_SECRET_KEY + '/' + [latitude],[longitude]
-// 	console.log(url)
-// 	request({url, json:true}, function(error, response){
-// 		if(error){
-// 			console.log(error.Error)
-// 		}else{
-// 			const data = response.body
-// 			if(data.Response == 'False'){
-// 				console.log('Error: ' + data.Error)
-// 			}else{
-// 				const climate = {
-
-// 				}
-// 				console.log(climate)
-// 			}
-// 		}
-// 	})
-// }
+module.exports = {
+	longAndLatFunc : longAndLatFunc,
+	climateFunc: climateFunc
+}

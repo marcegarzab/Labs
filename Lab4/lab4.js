@@ -26,7 +26,6 @@ const climateFunc = function(cityName, longAndLat){ //darksky api for weather fo
 	const long = parseFloat(splitLongLat[0])
 
 	const url = 'https://api.darksky.net/forecast/' + credentials.DARK_SKY_SECRET_KEY + '/' + lat + "," + long + "?lang=es&units=si"
-	console.log(url)
 	request({url, json:true}, function(error, response){
 		if(error){
 			console.log(error.Error)

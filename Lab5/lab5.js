@@ -10,17 +10,20 @@ const longAndLatFunc = function(cityName, callback){ //mapbox api for lat and lo
 		}else{
 			const data = response.body
 			if(data.Response == 'False'){
-				callback(cata.Error, undefined)
+				callback(data.Error, undefined)
 			}else{
 				const longAndLat = data.features[0].center
+				callback(undefined, longAndLat)
 			}
-			callback(undefined, longAndLat)
-			climateFunc(cityName, longAndLat)
 		}
 	})
 }
 
 const climateFunc = function(cityName, longAndLat, callback){ //darksky api for weather forecast
+	// if (typeof x === 'undefined' || x === null || !x) {
+	// 	console.log("entro")
+	// 	return 1;
+	// }
 	const LongLatString = longAndLat.toString()
 	const splitLongLat = LongLatString.split(",")
 	const lat = parseFloat(splitLongLat[1])
@@ -34,16 +37,41 @@ const climateFunc = function(cityName, longAndLat, callback){ //darksky api for 
 			const data = response.body
 			if(data.Response == 'False'){
 				callback(data.Error, undefined)
+			}else{
+				const climate = {
+					description : data.hourly.summary,
+					temp : data.currently.temperature,
+					precip : data.currently.precipProbability
+				}
+				callback(climate)
 			}
-			const climate = {
-				description : data.hourly.summary,
-				temp : data.currently.temperature,
-				precip : data.currently.precipProbability
-			}
-			// console.log(cityName + ": " + climate.description + " Actualmente esta a " + climate.temp + "°C. Hay " + (climate.precip*100) + "% de posibilidad de lluvia.")
-			callback(climate)
+			// console.log(cityName + ": " + climate.description + " Actualmente esta a " + climate.temp + "°C. Hay " + (climate.precip*100) + "% de posibilidad de lluvia.")		
 		}
 	})
+}
+
+const omdbSeason = function(title, season, callback) {
+  const url = 'http://www.omdbapi.com/?apikey=' + credentials.apikey +
+              '&t=' + title + '&Season=' + season
+  request({ url, json: true }, function(error, response) {
+    if (error) {
+      callback('Unable to connect to OMDB service', undefined)
+    } else {
+      const data = response.body
+      if ( data.Response == 'False' ) {
+        callback(data.Error, undefined)
+      } else {
+        const info = {
+          season : season,
+          episodes : []
+        }
+        for ( i in data.Episodes ) {
+          info.episodes.push( data.Episodes[i].Title )
+        }
+        callback(undefined, info)
+      }
+    }
+  })
 }
 
 module.exports = {

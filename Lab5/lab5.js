@@ -50,30 +50,6 @@ const climateFunc = function(cityName, longAndLat, callback){ //darksky api for 
 	})
 }
 
-const omdbSeason = function(title, season, callback) {
-  const url = 'http://www.omdbapi.com/?apikey=' + credentials.apikey +
-              '&t=' + title + '&Season=' + season
-  request({ url, json: true }, function(error, response) {
-    if (error) {
-      callback('Unable to connect to OMDB service', undefined)
-    } else {
-      const data = response.body
-      if ( data.Response == 'False' ) {
-        callback(data.Error, undefined)
-      } else {
-        const info = {
-          season : season,
-          episodes : []
-        }
-        for ( i in data.Episodes ) {
-          info.episodes.push( data.Episodes[i].Title )
-        }
-        callback(undefined, info)
-      }
-    }
-  })
-}
-
 module.exports = {
 	longAndLatFunc : longAndLatFunc,
 	climateFunc: climateFunc
